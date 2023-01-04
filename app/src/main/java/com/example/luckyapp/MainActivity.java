@@ -23,24 +23,26 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private int luckyNumber() {
-        int minValue = 0, maxValue = 100;
+        int minValue = 1, maxValue = 999;
         Random randomGenerator = new Random();
         int luckyNumber = randomGenerator.nextInt((maxValue - minValue) + 1) + minValue;
         return luckyNumber;
+    }
+
+    private void packingData(Intent i) {
+        int generatedLuckyNumber = luckyNumber();
+        String userName = etName.getText().toString();
+        i.putExtra("userName", userName);
+        i.putExtra("luckyNumber", generatedLuckyNumber);
     }
 
     private void initiate() {
         etName = findViewById(R.id.etName);
         btnGetLuckyNumber = findViewById(R.id.btnGetLuckyNumber);
         btnGetLuckyNumber.setOnClickListener(v -> {
-            int generatedLuckyNumber = luckyNumber();
-            String userName = etName.getText().toString();
-
-            Intent i = new Intent(getApplicationContext(),LuckyNumberActivity.class);
-            i.putExtra("userName",userName);
-            i.putExtra("luckyNumber",generatedLuckyNumber);
+            Intent i = new Intent(getApplicationContext(), LuckyNumberActivity.class);
+            packingData(i);
             startActivity(i);
         });
-
     }
 }
